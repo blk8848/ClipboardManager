@@ -91,6 +91,16 @@ final class ClipboardStore {
         }
     }
 
+    // MARK: - 删除
+
+    func deleteItem(at index: Int) {
+        guard index >= 0, index < history.count else { return }
+        history.remove(at: index)
+        DispatchQueue.main.async { [weak self] in
+            self?.onHistoryChanged?()
+        }
+    }
+
     // MARK: - 复制
 
     func copyToClipboard(_ item: ClipboardItem) {
